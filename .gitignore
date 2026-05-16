@@ -1,0 +1,40 @@
+# Data (large, download separately via OneDrive link in README)
+data/
+
+# Experiment outputs
+release_test/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc large files
+*.pth
+*.ply
+*.xyz
+*.npy
+*.npz

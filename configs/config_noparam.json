@@ -1,0 +1,31 @@
+{
+    "seed": 0,
+    "cuda_id": 0,
+    "max_epoch": 10000,
+    "eval_step": 1000,
+    "mode": "train",
+    "dtype": "float",
+    "train_method": "no_param",
+    "train_data": "./data/model",
+    "save_dir": "./release_test/",
+    "add_samples": 10000,
+    "batchsize": 10000,
+    "net_params": {
+        "dim_in": 3,
+        "num_neurons": 512,
+        "num_de_layers": 8,
+        "emb_deg": 88,
+        "pe_dim": 0,
+        "pe_feature_dim_in": 8,
+        "use_duv": true
+    },
+    "loss_params": {
+        "surf_metric": "pdm",
+        "alpha": 1.0,
+        "normal": 0.01,
+        "uniform": 0.1,
+        "conformal": 0.0,
+        "cycle": 0.1,
+        "boundary": 1.0 
+    }
+}
