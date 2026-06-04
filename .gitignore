@@ -1,6 +1,10 @@
 # Data (large, download separately via OneDrive link in README)
 data/
 
+# Blender render outputs
+neupps_blender
+renders/
+
 # Experiment outputs
 release_test/
 
