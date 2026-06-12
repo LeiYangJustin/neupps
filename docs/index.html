@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuPPS: Neural Piecewise Parametric Surfaces</title>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background: #fff;
+      color: #363636;
+    }
+    .title, .subtitle, h1, h2, h3 {
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+    }
+
+    /* ── Hero ── */
+    .hero-body {
+      padding: 3rem 1.5rem 2rem;
+    }
+    .publication-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .publication-authors {
+      font-size: 1.05rem;
+    }
+    .author-block {
+      display: inline-block;
+      margin: 0 0.25rem;
+    }
+    .publication-venue {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #4a4a4a;
+    }
+    .equal-contrib {
+      font-size: 0.85rem;
+      color: #7a7a7a;
+    }
+
+    /* ── Buttons ── */
+    .link-block {
+      margin: 0.4rem;
+    }
+
+    /* ── Teaser video ── */
+    #teaser {
+      background: #f5f5f5;
+      padding: 2rem 0;
+    }
+    #teaser video {
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .teaser-caption {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* ── Section titles ── */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      border-bottom: 2px solid #e8e8e8;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Abstract ── */
+    #abstract {
+      padding: 2.5rem 0;
+    }
+    .abstract-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      text-align: justify;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Results grid ── */
+    #results {
+      background: #fafafa;
+      padding: 2.5rem 0;
+    }
+    .result-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .result-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+    .result-card video {
+      width: 100%;
+      display: block;
+    }
+    .result-label {
+      padding: 0.6rem 0.9rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4a4a4a;
+      background: #f0f0f0;
+      text-align: center;
+    }
+
+    /* ── BibTeX ── */
+    #bibtex {
+      padding: 2.5rem 0;
+    }
+    .bibtex-block {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border: 1px solid #ddd;
+    }
+
+    /* ── Footer ── */
+    footer.footer {
+      padding: 2rem 0;
+      background: #f5f5f5;
+    }
+    footer .content {
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    /* ── Responsive video containers ── */
+    .video-container {
+      position: relative;
+      width: 100%;
+    }
+
+    /* ── Wider layout ── */
+    .container.is-max-desktop {
+      max-width: 1280px !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+
+      <h1 class="title publication-title">
+        NeuPPS: Neural Piecewise Parametric Surfaces
+      </h1>
+
+      <div class="is-size-5 publication-authors" style="margin: 1rem 0;">
+        <span class="author-block"><a href="https://leiyangjustin.github.io">Lei Yang</a><sup>*1</sup>,</span>
+        <span class="author-block">Yongqing Liang<sup>*2</sup>,</span>
+        <span class="author-block">Xin Li<sup>2</sup>,</span>
+        <span class="author-block">Congyi Zhang<sup>1</sup>,</span>
+        <span class="author-block">Guying Lin<sup>1</sup>,</span>
+        <span class="author-block">Cheng Lin<sup>3</sup>,</span>
+        <span class="author-block">Alla Sheffer<sup>4</sup>,</span>
+        <span class="author-block">Scott Schaefer<sup>2</sup>,</span>
+        <span class="author-block">John Keyser<sup>2</sup>,</span>
+        <span class="author-block">Wenping Wang<sup>2</sup></span>
+      </div>
+
+      <div class="is-size-6 equal-contrib" style="margin-bottom: 0.6rem;">
+        <sup>*</sup>Equal contribution &nbsp;
+        <sup>1</sup>The University of Hong Kong &nbsp;
+        <sup>2</sup>Texas A&amp;M University &nbsp;
+        <sup>3</sup>Macau University of Science and Technology &nbsp;
+        <sup>4</sup>University of British Columbia &nbsp;
+      </div>
+
+      <div class="publication-venue" style="margin-bottom: 1.5rem;">
+        ACM Transactions on Graphics (SIGGRAPH Asia 2025), Vol. 45, No. 2, Article 13
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons is-centered">
+        <a href="https://doi.org/10.1145/3771546" target="_blank" class="button is-dark is-rounded link-block">
+          <span class="icon"><i class="fas fa-file-pdf"></i></span>
+          <span>Paper</span>
+        </a>
+        <a href="https://arxiv.org/abs/2309.09911" target="_blank" class="button is-dark is-rounded link-block">
+          <span class="icon"><i class="ai ai-arxiv"></i></span>
+          <span>arXiv</span>
+        </a>
+        <a href="https://github.com/LeiYangJustin/neupps" target="_blank" class="button is-dark is-rounded link-block">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          <span>Code</span>
+        </a>
+        <a href="https://1drv.ms/f/c/072d8a240b13b9af/IgC-xE36InipQbco5HHG4vYYAUkjpdzb3nDMuJvq6FJH3o8?e=Nfygp3" target="_blank" class="button is-dark is-rounded link-block">
+          <span class="icon"><i class="fas fa-database"></i></span>
+          <span>Data</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ TEASER ══════════════════════ -->
+<section id="teaser">
+  <div class="container is-max-desktop has-text-centered">
+    <div class="columns is-vcentered" style="margin:0;">
+      <div class="column is-two-thirds" style="padding:0.5rem;">
+        <img src="./static/images/teaser.png" alt="NeuPPS teaser"
+             style="width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.15);" />
+      </div>
+      <div class="column" style="padding:0.5rem;">
+        <video autoplay muted loop playsinline
+               style="width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+          <source src="./static/videos/horse_traj.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <p class="teaser-caption">
+      NeuPPS represents complex surface shapes as a collection of neural piecewise
+      parametric patches, each mapped from a 2D parametric domain to 3D space.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════ ABSTRACT ══════════════════════ -->
+<section id="abstract" class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">Abstract</h2>
+    <div class="abstract-text">
+      Piecewise parametric surfaces have long been established as prevalent geometric representations;
+      however, they often require surface refinement or sophisticated quadrangulation to accurately represent complex geometries.
+      Geometric deep learning has shown that neural networks can provide greater representational power than conventional methods.
+      Nevertheless, approaches using a single parametric surface for shape fitting struggle to capture fine-grained geometric details,
+      while multi-patch methods fail to ensure seamless connections between adjacent patches.
+      <br><br>
+      We present <em>Neural Piecewise Parametric Surfaces</em> (<em>NeuPPS</em>),
+      the <em>first</em> piecewise neural surface representation that allows for
+      coarse patch layouts composed of <em>arbitrary <i>n</i>-sided surface patches</em> to model complex surface geometries with high precision,
+      offering enhanced <em>flexibility</em> compared to traditional parametric surfaces.
+      This new surface representation guarantees, by construction, the continuity between adjacent patches,
+      a property that other neural patch-based approaches cannot ensure.
+      Two novel components are introduced: a learnable feature complex and a continuous mapping function approximated by multi-layer perceptrons (MLPs).
+      We apply the proposed <em>NeuPPS</em> to surface fitting and shape space learning tasks.
+      Extensive experiments demonstrate the advantages of <em>NeuPPS</em> over traditional parametric representations and existing patch-based learning approaches.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ RESULTS ══════════════════════ -->
+<section id="results" class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">Results</h2>
+    <p class="has-text-centered" style="margin-bottom:2rem; color:#666;">
+      360° renderings of reconstructed surfaces. Each shape is decomposed into
+      n-gon patches shown with patch-color-coding and textured rendering.
+    </p>
+
+    <div class="columns is-multiline">
+
+      <!-- Bimba -->
+      <div class="column is-half">
+        <div class="result-card">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/bimba_traj.mp4" type="video/mp4" />
+          </video>
+          <div class="result-label">Bimba &mdash; Complex geometric details</div>
+        </div>
+      </div>
+
+      <!-- Kitten -->
+      <div class="column is-half">
+        <div class="result-card">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/kitten_traj.mp4" type="video/mp4" />
+          </video>
+          <div class="result-label">Kitten &mdash; Genus-1 shape</div>
+        </div>
+      </div>
+
+      <!-- Boat -->
+      <div class="column is-half">
+        <div class="result-card">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/boat_traj.mp4" type="video/mp4" />
+          </video>
+          <div class="result-label">Boat &mdash; Open surface, non-manifold, sharp features</div>
+        </div>
+      </div>
+
+      <!-- Skirt textured -->
+      <div class="column is-half">
+        <div class="result-card">
+          <video autoplay muted loop playsinline>
+            <source src="./static/videos/skirt_traj.mp4" type="video/mp4" />
+          </video>
+          <div class="result-label">Skirt &mdash; Man-made shape with intricate folds</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ METHOD OVERVIEW ══════════════════════ -->
+<section id="method" class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">Method Overview</h2>
+    <div class="has-text-centered" style="margin-bottom:1.5rem;">
+      <!-- Replace with your method figure if available -->
+      <img src="./static/images/method.png" alt="Method overview"
+           style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);"
+           onerror="this.style.display='none'" />
+    </div>
+    <div class="has-text-centered" style="margin-top:2rem;">
+      <img src="./static/images/pipeline.png" alt="Pipeline"
+           style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);" />
+    </div>
+    <div class="content" style="max-width:100%; margin:0 auto; line-height:1.8;">
+      <ul>
+        <li>Each surface shape is decomposed into a <strong>polygonal complex</strong> of n-gon surface patches.</li>
+        <li>Each patch vertex is assigned a learnable <strong>nodal embedding</strong>; interior features are obtained via mean-value coordinate interpolation.</li>
+        <li>A shared <strong>MLP decoder</strong> (MultiNetGraph) maps positional encoding + interpolated features to 3D positions.</li>
+        <li>Supports mesh inputs with parameterization and raw <strong>point cloud inputs</strong> without pre-parameterization.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ MORE RESULTS ══════════════════════ -->
+<section id="more-results" class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">More Results</h2>
+    <div class="has-text-centered" style="margin-bottom:1.5rem;">
+      <!-- Replace with your method figure if available -->
+      <img src="./static/images/gallery_2_n1.png" alt="More results"
+           style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);"
+           onerror="this.style.display='none'" />
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ BIBTEX ══════════════════════ -->
+<section id="bibtex" class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title has-text-centered">BibTeX</h2>
+    <pre class="bibtex-block">@article{10.1145/3771546,
+    author = {Yang, Lei and Liang, Yongqing and Li, Xin and Zhang, Congyi and Lin, Guying and Lin, Cheng and Sheffer, Alla and Schaefer, Scott and Keyser, John and Wang, Wenping},
+    title = {NeuPPS: Neural Piecewise Parametric Surfaces},
+    year = {2025},
+    issue_date = {April 2026},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {45},
+    number = {2},
+    issn = {0730-0301},
+    url = {https://doi.org/10.1145/3771546},
+    doi = {10.1145/3771546},
+    journal = {ACM Trans. Graph.},
+    month = dec,
+    articleno = {13},
+    numpages = {18},
+    keywords = {Deep learning, Surface reconstruction}
+    }
+    </pre>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page design is inspired by
+        <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+        Source code available at
+        <a href="https://github.com/LeiYangJustin/neupps" target="_blank">GitHub</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
