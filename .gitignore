@@ -42,3 +42,7 @@ Thumbs.db
 *.xyz
 *.npy
 *.npz
+
+renders
+release*
+neupps_blender
