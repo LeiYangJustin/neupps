@@ -47,7 +47,7 @@ Folder
     |-- single
         |-- mesh.obj (the surface mesh of the target shape)
     |-- cell_arc_lengths.json (arc length of each edge in each cell)
-    |-- mask.json (??)
+    |-- mask.json (patch information)
     |-- topology_graph.json
 |-- flat_parameterization (planar parameterized meshes for checking)
 |-- parameterization (segmented surface patches with parameterization)
@@ -69,7 +69,7 @@ NeuralSurfaceRelease/
 |-- main.py                  # Entry point for mesh-based training and evaluation
 |-- main_pc.py               # Entry point for point cloud input
 |-- run_all_exp.sh           # Script to run all experiments in batch
-|-- environment.yml          # Conda environment specification
+|-- env.yml          # Conda environment specification
 |
 |-- configs/                 # JSON configuration files for experiments
 |   |-- config.json          # Default config (mesh with parameterization)

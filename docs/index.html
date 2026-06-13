@@ -233,7 +233,10 @@
     </div>
     <p class="teaser-caption">
       NeuPPS represents complex surface shapes as a collection of neural piecewise
-      parametric patches, each mapped from a 2D parametric domain to 3D space.
+      parametric patches, each mapped from a 2D parametric domain to 3D space via a shared, learnable neural network, 
+      and ensures continuity between adjacent patches. 
+      It allows for n-gon patches of arbitrary topology, enabling flexible modeling of complex geometries with coarse patch layouts compared to traditional spline methods.
+      It can achieve high-fidelity surface reconstruction from both mesh and point cloud inputs.
     </p>
   </div>
 </section>
